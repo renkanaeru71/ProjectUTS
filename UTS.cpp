@@ -71,11 +71,11 @@ int main (){
 		switch(pilih){
 			case 1 : 
 				cout << "INPUT DATA\n";
-			//	tambahbuku();
+			//	input();
 				break;
 			case 2: 
 				cout << "TAMPIL DATA\n";
-			//	tampilbuku();
+			//	tampil();
 				break;
 			case 3:
 				cout << "SEARCHING\n";
