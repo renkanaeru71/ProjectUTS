@@ -19,7 +19,32 @@ void searching (){
 		cin >> pilih;  
 		cout << endl;
 		
-		if ()
+		if (pilih == 1)
+		{
+			seqsearching();
+			}
+		else if (pilih == 2)
+		{
+			BubbleS();
+			binary();
+			dataawal();
+			}
+		else if (pilih == 3)
+		{
+			ulang = 't';
+			}
+		else 
+		{
+			cout << "Pilihan di menu searching tidak ada...\n";
+			}
+			
+		if (pilih != 3)
+		{
+			cout << "Ulangi (y/t) : ";
+			cin >> ulang;
+			}
+		} while (ulang == 'y' || ulang == 'Y');
+	}
 	
 	
 	
