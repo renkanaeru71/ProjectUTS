@@ -95,7 +95,7 @@ void ShellS(){
 
 
 void seqsearching(){
-	system("clear");
+	system("cls");
 	int cari;
 	int x =0;
 	bool ketemu = false;
@@ -138,8 +138,23 @@ void dataawal()
     }
 }
 
+void insertionS(){
+    pendaftaran temp;
+    int a, b;
+    for (a = 1; a < jumlah; a++) {
+        temp = dat[a];
+        b = a - 1;
+
+        while (b >= 0 && dat[b].nopendaftaran > temp.nopendaftaran) {
+            dat[b + 1] = dat[b];
+            b = b - 1;
+        }
+        dat[b + 1] = temp;
+    }
+}
+
 void binary(){
-	system("clear");
+	system("cls");
 	int cari;
 	int kiri, tengah, kanan;
 	bool ketemu = false;
@@ -185,7 +200,7 @@ void searching (){
 	int pilih;
 	
 	do{
-		system("clear");
+		system("cls");
 		cout << "MENU SEARCHING\n";
 		cout << "=========================\n";
 		cout << "1. Sequential\n";
@@ -249,7 +264,7 @@ void sorting(){
 	int pilih;
 	
 	do {
-		system("clear");
+		system("cls");
 
         cout << "MENU SORTING :\n";
         cout << "=========================\n";
@@ -284,6 +299,15 @@ void sorting(){
 			tampil();
 			dataawal();
 			break;
+			
+			case 3:
+			cout << "\nData Sebelum disorting: \n";
+			tampil();
+			insertionS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
 		}
 		
 		} while (ulang == 'y' || ulang == 'Y');
@@ -292,10 +316,10 @@ void sorting(){
 int main (){
 	int pilih;
 	cout << "PROGRAM TUGAS\n";
-	system("clear");
+	system("cls");
 	
 	do{
-		system("clear");
+		system("cls");
 		cout << "MENU\n";
 		cout << "PROGRAM TUGAS\n";
 		cout << "=========================\n";
@@ -310,18 +334,18 @@ int main (){
 		
 		switch(pilih){
 			case 1 : 
-				system("clear");
+				system("cls");
 				cout << "INPUT DATA\n";
 				input();
 				cin.ignore();
-				system("clear");
+				system("cls");
 				break;
 			case 2: 
-				system("clear");
+				system("cls");
 				cout << "TAMPIL DATA\n";
 				tampil();
 				cin.ignore();
-				system("clear");
+				system("cls");
 				break;
 			case 3:
 				cout << "SEARCHING\n";
