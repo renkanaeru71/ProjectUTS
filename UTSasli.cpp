@@ -27,10 +27,11 @@ void input(){
 		cout <<"Data ke -" << jumlah+1 << endl;
 		cout << "No Pendaftaran: ";
 		cin >> dat[jumlah].nopendaftaran;
+		cin.ignore();
 		cout << "Nama: ";
-		cin >> dat[jumlah].nama;
-		cout << "Tanggal: ";
-		cin >> dat[jumlah].tanggal;
+		getline(cin, dat[jumlah].nama);
+		cout << "Tanggal:(YYYY-MM-DD): ";
+		getline(cin, dat[jumlah].tanggal);
 		cout << endl;
 		
 		dattemp[jumlah] = dat[jumlah];
@@ -49,6 +50,49 @@ void BubbleS(){
 		}
 	return;
 	}
+
+void SelectionS(){
+    pendaftaran temp;
+    int min;
+
+    for (int a = 0; a < jumlah - 1; a++)
+    {
+        min = a;
+
+        for (int b = a + 1; b < jumlah; b++)
+        {
+            if (dat[b].nama < dat[min].nama)
+            {
+                min = b;
+            }
+        }
+
+        temp = dat[min];
+        dat[min] = dat[a];
+        dat[a] = temp;
+	}
+
+}
+
+void ShellS(){
+	    int gap, a, b;
+
+    for (gap = jumlah / 2; gap > 0; gap /= 2)
+    {
+        for (a = gap; a < jumlah; a++)
+        {
+            for (b = a - gap; b >= 0; b -= gap)
+            {
+                if (dat[b + gap].nopendaftaran < dat[b].nopendaftaran)
+                {
+                    swap(dat[b], dat[b + gap]);
+                }
+            }
+        }
+    }
+}
+
+
 
 void seqsearching(){
 	system("clear");
@@ -72,7 +116,7 @@ void seqsearching(){
 		
 	}
 	if(!ketemu){
-		cout << cari << "tidak ditemukan!\n";
+		cout << cari << " tidak ditemukan!\n";
 		}
 		else{
 			cout << "\nData ditemukan";
@@ -124,7 +168,7 @@ void binary(){
 	}
 	
 	if(!ketemu){
-		cout << cari << "tidak ditemukan!" << endl;
+		cout << cari << " tidak ditemukan!" << endl;
 		}
 		else {
         cout << "\nData ditemukan";
@@ -200,7 +244,50 @@ void tampil(){
 	cin.ignore();
 }
 
+void sorting(){
+	char ulang;
+	int pilih;
+	
+	do {
+		system("clear");
 
+        cout << "MENU SORTING :\n";
+        cout << "=========================\n";
+        cout << "1. BUBBLE SORT\n";
+        cout << "2. SELECTION SORT\n";
+        cout << "3. INSERTION SORT\n";
+        cout << "4. SHELL SORT\n";
+        cout << "5. QUICK SORT\n";
+        cout << "6. MERGE SORT\n";
+        cout << "7. Kembali ke MENU UTAMA\n";
+        cout << "=========================\n";
+        cout << "Pilih : ";
+        cin >> pilih;
+        cout << endl;
+        
+        switch(pilih) {
+        
+			case 1 :
+			cout << "\nData Sebelum disorting: \n";
+			tampil();
+			BubbleS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
+			
+			case 2: 
+			cout << "\nData Sebelum disorting: \n";
+			tampil();
+			SelectionS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
+		}
+		
+		} while (ulang == 'y' || ulang == 'Y');
+	}
 
 int main (){
 	int pilih;
@@ -242,7 +329,7 @@ int main (){
 				break;
 			case 4: 
 				cout << "SORTING\n";
-			//	checkreq();
+				sorting();
 				break;
 			case 5: 
 				cout << "Exiting program...\n";
