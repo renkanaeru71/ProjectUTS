@@ -25,12 +25,13 @@ void input(){
 		
 		for(jumlah = 0; jumlah < n; jumlah++){
 		cout <<"Data ke -" << jumlah+1 << endl;
-		cout << "No Pendaftaran: \n";
+		cout << "No Pendaftaran: ";
 		cin >> dat[jumlah].nopendaftaran;
-		cout << "Nama: \n";
+		cout << "Nama: ";
 		cin >> dat[jumlah].nama;
-		cout << "Tanggal: \n";
+		cout << "Tanggal: ";
 		cin >> dat[jumlah].tanggal;
+		cout << endl;
 		
 		dattemp[jumlah] = dat[jumlah];
 		}
@@ -50,6 +51,7 @@ void BubbleS(){
 	}
 
 void seqsearching(){
+	system("clear");
 	int cari;
 	int x =0;
 	bool ketemu = false;
@@ -84,7 +86,55 @@ void seqsearching(){
 
 }
 
+void dataawal()
+{
+    for (int x = 0; x < jumlah; x++)
+    {
+        dat[x] = dattemp[x];
+    }
+}
 
+void binary(){
+	system("clear");
+	int cari;
+	int kiri, tengah, kanan;
+	bool ketemu = false;
+	cout << "BINARY SEARCH\n";
+	cout << "==================\n";
+
+    cout << "\nNo Pendaftaraan yang dicari = ";
+    cin >> cari;
+    
+    kiri = 0;
+    kanan = jumlah-1;
+    
+    while (kiri <= kanan && !ketemu){
+		tengah = (kiri + kanan) / 2;
+		
+		if (dat[tengah].nopendaftaran == cari)
+		{
+			ketemu = true;
+			}
+		else if (cari < dat[tengah].nopendaftaran){
+			kanan = tengah -1;
+			}
+		else {
+			kiri = tengah + 1;
+			}
+	}
+	
+	if(!ketemu){
+		cout << cari << "tidak ditemukan!" << endl;
+		}
+		else {
+        cout << "\nData ditemukan";
+        cout << "\n==========================\n";
+        cout << "No pendaftaran   \t: " << dat[tengah].nopendaftaran << endl;
+        cout << "Nama \t: " << dat[tengah].nama << endl;
+        cout << "Tanggal   \t: " << dat[tengah].tanggal << endl;
+        cout << "==========================\n";
+			}
+}
 
 void searching (){
 	char ulang;
@@ -106,9 +156,9 @@ void searching (){
 			seqsearching();
 			}
 		else if (pilih == 2){
-			//BubbleS();
-			//binary();
-			//dataawal();
+			BubbleS();
+			binary();
+			dataawal();
 			}
 		else if (pilih == 3){
 			ulang = 't';
@@ -131,13 +181,19 @@ void tampil(){
 		cin.ignore();
 		return;
 		}
-           cout << "\n========================================\n";
-           cout << "   NO PENDAFTARAN         NAMA      TANGGAL\n";
-           cout << "===========================================\n";
+           cout << "\n====================================================\n";
+           
+			cout << left
+				 << setw(20) << "NO PENDAFTARAN"
+				 << setw(20) << "NAMA"
+				 << setw(15) << "TANGGAL"
+				 << endl;
+           cout << "====================================================\n";
 		for (int x = 0; x < jumlah; x++){
-
-        cout << setw(10)  << dat[x].nopendaftaran
-             << setw(15)  << dat[x].nama
+		
+        cout << left
+			 << setw(20)  << dat[x].nopendaftaran
+             << setw(20)  << dat[x].nama
              << setw(15) << dat[x].tanggal        
              << endl;
     }
@@ -152,7 +208,7 @@ int main (){
 	system("clear");
 	
 	do{
-		//system("clear");
+		system("clear");
 		cout << "MENU\n";
 		cout << "PROGRAM TUGAS\n";
 		cout << "=========================\n";
@@ -182,7 +238,7 @@ int main (){
 				break;
 			case 3:
 				cout << "SEARCHING\n";
-			//	searching();
+				searching();
 				break;
 			case 4: 
 				cout << "SORTING\n";
