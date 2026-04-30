@@ -1,4 +1,3 @@
-//kelompok 11: 123250061, 123250065, 123250066
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -75,7 +74,7 @@ void SelectionS(){
 
 }
 
-void ShellS(){
+void shellS(){
 	    int gap, a, b;
 
     for (gap = jumlah / 2; gap > 0; gap /= 2)
@@ -151,6 +150,86 @@ void insertionS(){
             b = b - 1;
         }
         dat[b + 1] = temp;
+    }
+}
+
+void quickS() {
+    if (jumlah <= 1) return;
+
+    int stack[10];
+    int top = -1;
+
+    stack[++top] = 0;
+    stack[++top] = jumlah - 1;
+
+    while (top >= 0) {
+        int high = stack[top--];
+        int low = stack[top--];
+
+        long pivot = dat[high].nopendaftaran;
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++) {
+            if (dat[j].nopendaftaran < pivot) {
+                i++;
+                swap(dat[i], dat[j]);
+            }
+        }
+        swap(dat[i + 1], dat[high]);
+        int pi = i + 1;
+
+        if (pi - 1 > low) {
+            stack[++top] = low;
+            stack[++top] = pi - 1;
+        }
+
+        if (pi + 1 < high) {
+            stack[++top] = pi + 1;
+            stack[++top] = high;
+        }
+    }
+}
+
+void mergeS() {
+    pendaftaran temp[10];
+    
+    for (int curr_size = 1; curr_size <= jumlah - 1; curr_size = 2 * curr_size) {
+        for (int left_start = 0; left_start < jumlah - 1; left_start += 2 * curr_size) {
+            
+            int mid = (left_start + curr_size - 1 < jumlah - 1) ? left_start + curr_size - 1 : jumlah - 1;
+            int right_end = (left_start + 2 * curr_size - 1 < jumlah - 1) ? left_start + 2 * curr_size - 1 : jumlah - 1;
+
+            int i = left_start;
+            int j = mid + 1;
+            int k = left_start;
+
+            while (i <= mid && j <= right_end) {
+                if (dat[i].nopendaftaran <= dat[j].nopendaftaran) {
+                    temp[k] = dat[i];
+                    i++;
+                } else {
+                    temp[k] = dat[j];
+                    j++;
+                }
+                k++;
+            }
+
+            while (i <= mid) {
+                temp[k] = dat[i];
+                k++;
+                i++;
+            }
+
+            while (j <= right_end) {
+                temp[k] = dat[j];
+                k++;
+                j++;
+            }
+
+            for (i = left_start; i <= right_end; i++) {
+                dat[i] = temp[i];
+            }
+        }
     }
 }
 
@@ -309,7 +388,48 @@ void sorting(){
 			tampil();
 			dataawal();
 			break;
+
+			case 4:
+			cout << "\nData Sebelum disorting: \n";		
+			tampil();
+			shellS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
+
+			case 5:
+			cout << "\nData Sebelum disorting: \n";
+			tampil();
+			quickS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
+
+			case 6:
+			cout << "\nData Sebelum disorting: \n";
+			tampil();
+			mergeS();
+			cout << "\nData setelah disorting: \n";
+			tampil();
+			dataawal();
+			break;
+
+			case 7:
+			ulang = 't';
+			break;
+
+			default:
+			cout << "Pilihan tidak valid, silakan pilih antara 1-7.\n";
+			break;
+			
 		}
+		
+		if (pilih != 7){
+			cout << "Ulangi (y/t) : ";
+			cin >> ulang;
+			}	
 		
 		} while (ulang == 'y' || ulang == 'Y');
 	}
