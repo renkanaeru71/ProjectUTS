@@ -1,7 +1,7 @@
+//kelompok 11: 123250061, 123250065, 123250066
 #include <iostream>
 #include <iomanip>
 using namespace std;
-
 
 typedef struct {
     long nopendaftaran;
@@ -92,8 +92,6 @@ void shellS(){
     }
 }
 
-
-
 void seqsearching(){
 	system("cls");
 	int cari;
@@ -165,7 +163,6 @@ void quickS() {
     while (top >= 0) {
         int high = stack[top--];
         int low = stack[top--];
-
         long pivot = dat[high].nopendaftaran;
         int i = (low - 1);
 
@@ -266,19 +263,18 @@ void binary(){
 		cout << cari << " tidak ditemukan!" << endl;
 		}
 		else {
-        cout << "\nData ditemukan";
-        cout << "\n==========================\n";
-        cout << "No pendaftaran   \t: " << dat[tengah].nopendaftaran << endl;
-        cout << "Nama \t: " << dat[tengah].nama << endl;
-        cout << "Tanggal   \t: " << dat[tengah].tanggal << endl;
-        cout << "==========================\n";
+			cout << "\nData ditemukan";
+			cout << "\n==========================\n";
+			cout << "No pendaftaran   \t: " << dat[tengah].nopendaftaran << endl;
+			cout << "Nama \t: " << dat[tengah].nama << endl;
+			cout << "Tanggal   \t: " << dat[tengah].tanggal << endl;
+			cout << "==========================\n";
 			}
 }
 
 void searching (){
 	char ulang;
 	int pilih;
-	
 	do{
 		system("cls");
 		cout << "MENU SEARCHING\n";
@@ -345,7 +341,6 @@ void sorting(){
 	
 	do {
 		system("cls");
-
         cout << "MENU SORTING :\n";
         cout << "=========================\n";
         cout << "1. BUBBLE SORT\n";
@@ -361,7 +356,6 @@ void sorting(){
         cout << endl;
         
         switch(pilih) {
-        
 			case 1 :
 			cout << "\nData Sebelum disorting: \n";
 			tampil();
@@ -423,7 +417,6 @@ void sorting(){
 			default:
 			cout << "Pilihan tidak valid, silakan pilih antara 1-7.\n";
 			break;
-			
 		}
 		
 		if (pilih != 7){
@@ -463,29 +456,38 @@ int main (){
 				break;
 			case 2: 
 				system("cls");
-				cout << "TAMPIL DATA\n";
-				tampil();
-				cin.ignore();
-				system("cls");
+				if (int jumlah = 0){
+					cout<<"Data tidak ditemukan!"<<endl;
+				} else{
+					cout << "TAMPIL DATA\n";
+					tampil();
+					cin.ignore();
+					system("cls");
+				}
 				break;
 			case 3:
+				if(int jumlah = 0){
+					cout<<"Data tidak ditemukan!"<<endl;
+				} else{
 				cout << "SEARCHING\n";
 				searching();
+				}
 				break;
 			case 4: 
+			if(int jumlah = 0){
+				cout<<"Data tidak ditemukan!"<<endl;
+			} else{
 				cout << "SORTING\n";
 				sorting();
+			}
 				break;
 			case 5: 
 				cout << "Exiting program...\n";
 				break;
 			default:
-				cout << "PILIHAN TIDAK VALID\n";
-			
+				cout << "PILIHAN TIDAK VALID\n";			
 			}
 		
-
 		} while (pilih !=5);
-		
 		return 0;
 	}
