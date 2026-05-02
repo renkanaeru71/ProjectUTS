@@ -1,4 +1,7 @@
-//kelompok 11: 123250061, 123250065, 123250066
+//kelompok 11: 
+// 123250061 - Rizky Pratama
+// 123250065 - Gilbert Bagus Nugroho
+// 123250066 - Ahmad Rofiq Asysyakury
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -20,7 +23,7 @@ void input(){
 	cout << "Jumlah data (max 10): ";
     cin >> n;
 	
-	if(n<11){
+	if(n > 0 && n < 11){
 		cout << endl;
 		
 		for(jumlah = 0; jumlah < n; jumlah++){
@@ -35,10 +38,16 @@ void input(){
 		cout << endl;
 		
 		dattemp[jumlah] = dat[jumlah];
-		}
+		} 
+		}else {
+			cout << "Jumlah harus antara 1 - 10!\n";
+			cin.ignore();
+			return;
+
+			}
 	
 	}
-}
+
 
 void BubbleS(){
 	for (int a=0; a<jumlah-1; a++){
@@ -273,6 +282,11 @@ void binary(){
 }
 
 void searching (){
+	if (jumlah == 0){
+		cout << "Data masih kosong!\n";
+		cin.ignore();
+		return;
+		}
 	char ulang;
 	int pilih;
 	do{
@@ -336,6 +350,11 @@ void tampil(){
 }
 
 void sorting(){
+	if (jumlah == 0){
+		cout << "Data masih kosong!\n";
+		cin.ignore();
+		return;
+		}
 	char ulang;
 	int pilih;
 	
@@ -455,30 +474,23 @@ int main (){
 				break;
 			case 2: 
 				system("cls");
-				if (jumlah == 0){
-					cout<<"Data tidak ditemukan!"<<endl;
-				} else{
-					cout << "TAMPIL DATA\n";
-					tampil();
-					cin.ignore();
-					system("cls");
-				}
+				tampil();
+				cin.ignore();
+				system("cls");
 				break;
 			case 3:
-				if(jumlah == 0){
-					cout<<"Data tidak ditemukan!"<<endl;
-				} else{
+				system("cls");
 				cout << "SEARCHING\n";
 				searching();
-				}
+				cin.ignore();
+				system("cls");
 				break;
 			case 4: 
-			if(jumlah ==  0){
-				cout<<"Data tidak ditemukan!"<<endl;
-			} else{
+				system("cls");
 				cout << "SORTING\n";
 				sorting();
-			}
+				cin.ignore();
+				system("cls");
 				break;
 			case 5: 
 				cout << "Exiting program...\n";
