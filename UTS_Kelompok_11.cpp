@@ -455,7 +455,7 @@ int main (){
 				break;
 			case 2: 
 				system("cls");
-				if (int jumlah = 0){
+				if (jumlah == 0){
 					cout<<"Data tidak ditemukan!"<<endl;
 				} else{
 					cout << "TAMPIL DATA\n";
@@ -465,7 +465,7 @@ int main (){
 				}
 				break;
 			case 3:
-				if(int jumlah = 0){
+				if(jumlah == 0){
 					cout<<"Data tidak ditemukan!"<<endl;
 				} else{
 				cout << "SEARCHING\n";
@@ -473,7 +473,7 @@ int main (){
 				}
 				break;
 			case 4: 
-			if(int jumlah = 0){
+			if(jumlah ==  0){
 				cout<<"Data tidak ditemukan!"<<endl;
 			} else{
 				cout << "SORTING\n";
