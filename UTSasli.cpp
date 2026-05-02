@@ -423,7 +423,6 @@ void sorting(){
 			cout << "Ulangi (y/t) : ";
 			cin >> ulang;
 			}	
-		
 		} while (ulang == 'y' || ulang == 'Y');
 	}
 
