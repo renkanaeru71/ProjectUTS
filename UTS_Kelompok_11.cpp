@@ -488,6 +488,25 @@ void tampil(){
 	cin.ignore();
 }
 
+void simpanHasilSorting(){
+    char pilih;
+    char filebaru[20];
+
+    cout << "\nSimpan hasil sorting ke file? (y/t): ";
+    cin >> pilih;
+
+    if(pilih == 'y' || pilih == 'Y'){
+        cout << "Nama file output: ";
+        cin >> filebaru;
+
+        strcpy(namafile, filebaru);
+        updatemode = 0;   
+        simpandata();
+
+        cout << "Hasil sorting berhasil disimpan!\n";
+    }
+}
+
 void sorting(){
 	if (jumlah == 0){
 		cout << "Data masih kosong!\n";
@@ -520,6 +539,7 @@ void sorting(){
 			BubbleS();
 			cout << "\nData setelah disorting: \n";
 			tampil();
+			simpanHasilSorting();
 			dataawal();
 			break;
 			
@@ -529,6 +549,7 @@ void sorting(){
 			SelectionS();
 			cout << "\nData setelah disorting: \n";
 			tampil();
+			simpanHasilSorting();
 			dataawal();
 			break;
 			
@@ -538,6 +559,7 @@ void sorting(){
 			insertionS();
 			cout << "\nData setelah disorting: \n";
 			tampil();
+			simpanHasilSorting();
 			dataawal();
 			break;
 
@@ -547,6 +569,7 @@ void sorting(){
 			shellS();
 			cout << "\nData setelah disorting: \n";
 			tampil();
+			simpanHasilSorting();
 			dataawal();
 			break;
 
@@ -565,6 +588,7 @@ void sorting(){
 			mergeS();
 			cout << "\nData setelah disorting: \n";
 			tampil();
+			simpanHasilSorting();
 			dataawal();
 			break;
 
