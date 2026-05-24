@@ -39,25 +39,50 @@ void simpanFile(){
     }
 }
 
-void simpandata(){
-    FILE *f = fopen(namafile, updatemode ? "ab" : "wb");
-    if(!f){ cout << "Gagal membuka file!"; return; }
-    fwrite(dat, sizeof(pendaftaran), jumlah, f);
-    fclose(f);
+void simpandata() {
+    ofstream f;
 
-    bool found=false;
+    if(updatemode)
+        f.open(namafile, ios::app);   // append
+    else
+        f.open(namafile);             // overwrite
+
+    if(!f){
+        cout << "Gagal membuka file!\n";
+        return;
+    }
+
+    for(int i = 0; i < jumlah; i++){
+        f << dat[i].nopendaftaran << "|"
+          << dat[i].nama << "|"
+          << dat[i].tanggal << endl;
+    }
+
+    f.close();
+    
+    bool found = false;
     FILE *idx = fopen("folder.txt", "rb");
     t = 0;
+
     if(idx){
         while(fread(listfile[t],20,1,idx)==1){
-            if(strcmp(listfile[t], namafile)==0) found=true;
+            if(strcmp(listfile[t], namafile)==0)
+                found = true;
             t++;
         }
         fclose(idx);
     }
-    if(!found) simpanFile();
 
-    cout << "Data tersimpan ke " << namafile << " ";
+    if(!found)
+        simpanFile();
+
+    cout << "Data tersimpan ke " << namafile << endl;
+}
+
+void cekfile(){
+    FILE *f = fopen(namafile, "rb");
+    adafile = (f != NULL);
+    if(f) fclose(f);
 }
 
 void input(){
@@ -87,8 +112,12 @@ void input(){
 			cout << "Jumlah harus antara 1 - 10!\n";
 			cin.ignore();
 			return;
-
+		
 			}
+			
+		cout << "Masukkan nama file: ";
+		cin >> namafile;
+			
 			cekfile();
 			if(adafile){
 				cout << "File sudah ada, overwrite(0) / append(1): ";
@@ -98,43 +127,65 @@ void input(){
 			updatemode = 0;
 	}		
 
-void cekfile(){
-    FILE *f = fopen(namafile, "rb");
-    adafile = (f != NULL);
-    if(f) fclose(f);
-}
 
-void ambilData(){
-    FILE *ptr = fopen(namafile, "rb");
-    if(ptr == NULL){
-        cout << "Error";
+void ambilData() {
+    ifstream f(namafile);
+
+    if(!f){
+        cout << "Error membuka file!\n";
         return;
     }
 
-    // statusmergeurut == 0 -> reset index baca
-    // disederhanakan dengan reset jumlah
+    if(statusmergeurut == 0)
     jumlah = 0;
+    string line;
 
-    while(fread(&dat[jumlah], sizeof(dat), 1, ptr) == 1){
+    while(getline(f, line)){
+        int p1 = line.find('|');
+        int p2 = line.find('|', p1+1);
+
+        dat[jumlah].nopendaftaran = stol(line.substr(0,p1));
+        dat[jumlah].nama = line.substr(p1+1, p2-p1-1);
+        dat[jumlah].tanggal = line.substr(p2+1);
+
+        dattemp[jumlah] = dat[jumlah];
         jumlah++;
     }
 
-    if(jumlah == 0){
-        cout << "File kosong!";
-    }
-    else{
-        // sesuai dekompilasi: kalau bukan mode searching/sorting langsung tampil
-        cout << left << setw(15) << "NIM" << setw(10) << "KELAS" << setw(10) << "IPK" << " ";
-        cout << "===================================";
-        for(int i=0;i<jumlah;i++){
-            cout << setw(15) << dat[i].nopendaftaran
-                 << setw(10) << dat[i].nama
-                 << setw(10) << dat[i].tanggal << " ";
-            dattemp[i] = dat[i];
-        }
-    }
+    f.close();
 
-    fclose(ptr);
+    cout << "\n====================================================\n";
+    cout << left
+         << setw(20) << "NO PENDAFTARAN"
+         << setw(20) << "NAMA"
+         << setw(15) << "TANGGAL"
+         << endl;
+    cout << "====================================================\n";
+
+    for(int i=0;i<jumlah;i++){
+        cout << setw(20) << dat[i].nopendaftaran
+             << setw(20) << dat[i].nama
+             << setw(15) << dat[i].tanggal
+             << endl;
+    }
+}
+
+void ambilFile(){
+    t = 0;
+
+    FILE *fptr = fopen("folder.txt","rb");
+
+    if(fptr == NULL){
+        cout << "Belum ada file yang disimpan\n";
+        lanjut = 0;
+    } else {
+        while(fread(listfile[t],20,1,fptr)==1){
+            cout << listfile[t] << endl;
+            t++;
+        }
+        fclose(fptr);
+        lanjut = 1;
+    }
 }
 
 void BubbleS(){
@@ -532,6 +583,275 @@ void sorting(){
 			}	
 		} while (ulang == 'y' || ulang == 'Y');
 	}
+	
+void updateData(){
+    long cari;
+    bool ketemu = false;
+
+    cout << "\nUPDATING DATA FILE\n";
+    cout << "----------------\n";
+    cout << "Nama File yang mau di update data : ";
+    cin >> namafile;
+
+    ambilData();
+
+    cout << "\nNo Pendaftaran yang mau diupdate : ";
+    cin >> cari;
+
+    cin.ignore();
+
+    for(int x=0; x<jumlah; x++){
+        if(dat[x].nopendaftaran == cari){
+            ketemu = true;
+
+            cout << "\nData semula :\n";
+            cout << "\tNo Pendaftaran : "
+                 << dat[x].nopendaftaran << endl;
+            cout << "\tNama           : "
+                 << dat[x].nama << endl;
+            cout << "\tTanggal        : "
+                 << dat[x].tanggal << endl;
+
+            cout << "\nInput update :\n";
+
+            cout << "\tNo Pendaftaran : ";
+            cin >> dat[x].nopendaftaran;
+            cin.ignore();
+
+            cout << "\tNama           : ";
+            getline(cin, dat[x].nama);
+
+            cout << "\tTanggal        : ";
+            getline(cin, dat[x].tanggal);
+
+            cout << endl;
+            break;
+        }
+    }
+
+    if(!ketemu){
+        cout << "Data tidak ditemukan!\n";
+        return;
+    }
+
+    simpandata();
+
+    cout << "\nData updating berhasil :\n";
+    ambilData();
+}
+
+void mergesambungfile(){
+    int n;
+    char file[4][20], hasil[20];
+
+    cout << "\nMERGE SAMBUNG\n";
+    cout << "Jumlah file (max 4): ";
+    cin >> n;
+
+    for(int x=0; x<n; x++){
+        cout << "Nama file " << x+1 << ": ";
+        cin >> file[x];
+    }
+
+    cout << "Output file: ";
+    cin >> hasil;
+
+    ofstream out(hasil);
+
+    for(int x=0; x<n; x++){
+        ifstream in(file[x]);
+        string baris;
+
+        while(getline(in, baris)){
+            out << baris << endl;
+        }
+        in.close();
+    }
+
+    out.close();
+
+    cout << "Merge selesai ke file " << hasil << endl;
+}
+
+void splittingfile(){
+    int n;
+    char filehasil[3][20];
+    long bawah, atas;
+
+    cout << "\nSPLITTING FILE\n";
+    cout << "----------------\n";
+    cout << "Nama file yang mau di splitting: ";
+    cin >> namafile;
+
+    ambilData();
+
+    cout << "Banyaknya file hasil splitting (max 3): ";
+    cin >> n;
+
+    for(int x=0; x<n; x++){
+
+        cout << "Nama File " << x+1 << " : ";
+        cin >> filehasil[x];
+
+        do{
+            adafile = 0;
+
+            strcpy(namafile, filehasil[x]);
+            cekfile();
+
+            if(adafile){
+                cout << "File sudah ada!\n";
+                cout << "Ulangi input Nama File " << x+1 << " : ";
+                cin >> filehasil[x];
+            }
+
+        }while(adafile);
+
+        cout << "Batas bawah No Pendaftaran : ";
+        cin >> bawah;
+
+        cout << "Batas atas No Pendaftaran  : ";
+        cin >> atas;
+
+        ofstream out(filehasil[x]);
+
+        if(!out){
+            cout << "Error\n";
+            continue;
+        }
+
+        for(int j=0; j<jumlah; j++){
+            if(dat[j].nopendaftaran >= bawah &&
+               dat[j].nopendaftaran <= atas){
+
+                out << dat[j].nopendaftaran << "|"
+                    << dat[j].nama << "|"
+                    << dat[j].tanggal << endl;
+            }
+        }
+
+        out.close();
+
+        strcpy(namafile, filehasil[x]);
+        simpanFile();
+
+        adafile = 0;
+    }
+
+    cout << "\nHasil SPLITTING FILE:\n";
+
+    for(int x=0; x<n; x++){
+        strcpy(namafile, filehasil[x]);
+
+        cout << "\nNama File " << x+1
+             << " : " << namafile << endl;
+
+        ambilData();
+        cout << endl;
+    }
+}
+
+void hapusDataFile() {
+    long cari;
+    char yakin;
+
+    cout << "\nHAPUS DATA FILE\n";
+    cout << "----------------\n";
+    cout << "Nama File yang datanya mau dihapus : ";
+    cin >> namafile;
+
+    ambilData();
+
+    if(jumlah == 0){
+        cout << "Data kosong!\n";
+        return;
+    }
+
+    cout << "\nNo Pendaftaran yang mau dihapus : ";
+    cin >> cari;
+
+    ofstream f(namafile);
+
+    if(!f){
+        cout << "Error membuka file!\n";
+        return;
+    }
+
+    bool ketemu = false;
+
+    for(int i=0; i<jumlah; i++){
+        if(dat[i].nopendaftaran == cari){
+            ketemu = true;
+
+            cout << "\nData ditemukan:\n";
+            cout << "No Pendaftaran : " << dat[i].nopendaftaran << endl;
+            cout << "Nama           : " << dat[i].nama << endl;
+            cout << "Tanggal        : " << dat[i].tanggal << endl;
+
+            cout << "Yakin data ini DIHAPUS (y/t)? ";
+            cin >> yakin;
+
+            if(yakin=='y' || yakin=='Y'){
+                cout << "Data berhasil dihapus!\n";
+                continue;   
+            }
+        }
+
+        f << dat[i].nopendaftaran << "|"
+          << dat[i].nama << "|"
+          << dat[i].tanggal << endl;
+    }
+
+    f.close();
+
+    if(!ketemu)
+        cout << "Data tidak ditemukan!\n";
+
+    cout << "\nPenghapusan data berhasil:\n";
+    ambilData();
+}
+
+void mergeurutfile(){
+    int n;
+    char file[4][20];
+    char hasil[20];
+
+    status = 1;
+
+    cout << "\nMERGE URUT\n";
+    cout << "----------------\n";
+    cout << "Banyaknya file yang akan di merge urut (max 4): ";
+    cin >> n;
+
+    for(int i=0; i<n; i++){
+        cout << "Nama File " << i+1 << " : ";
+        cin >> file[i];
+    }
+
+    cout << "Di MERGE URUT dan disimpan di file : ";
+    cin >> hasil;
+
+    for(int i=0; i<n; i++){
+        strcpy(namafile, file[i]);
+
+        if(i != 0)
+            statusmergeurut = 1;
+
+        ambilData();
+    }
+
+    strcpy(namafile, hasil);
+
+    BubbleS();      
+    updatemode = 0; 
+    simpandata();
+
+    statusmergeurut = 0;
+    status = 0;
+
+    cout << "\nHasil MERGE URUT : \n";
+    ambilData();
+}
 
 void operasi(){
     char ulang;
@@ -558,15 +878,19 @@ void operasi(){
                 break;
             case 2:
                 cout<<"Merge Urut\n";
+                mergeurutfile();
                 break;
             case 3:
                 cout<<"Splitting\n";
+                splittingfile();
                 break;
             case 4:
                 cout<<"Updating\n";
+                updateData();
                 break;
             case 5:
                 cout<<"Hapus Data\n";
+                hapusDataFile();
                 break;
             case 6:
                 ulang='t';
@@ -583,33 +907,6 @@ void operasi(){
     }while(ulang=='y'||ulang=='Y');
 }
 
-void mergesambungfile(){
-    int jumlah;
-    char file[4][20];
-    char hasil[20];
-
-    cout<<"MERGE SAMBUNG\n";
-    cin>>jumlah;
-
-    for(int i=0;i<jumlah;i++){
-        cout<<"Nama file "<<i+1<<": ";
-        cin>>file[i];
-    }
-
-    cout<<"Output file: ";
-    cin>>hasil;
-
-    //for(int i=0;i<jumlah;i++){
-       // baca(file[i]);
-
-    //    if(i==0)
-         //   tulisBaru(hasil);
-       // else
-           // append(hasil);
-    //}
-
-    //tampilkan(hasil);
-}
 
 int main (){
 	int pilih;
@@ -625,7 +922,7 @@ int main (){
 		cout << "2. TAMPIL DATA\n";
 		cout << "3. SEARCHING\n";
 		cout << "4. SORTING\n";
-		cout << "5. OPERASI FILE\n";
+		cout << "5. OPERASI\n";
 		cout << "6. EXIT\n";
 		cout << "=========================\n";
 		cout << "Pilih: ";
@@ -641,28 +938,47 @@ int main (){
 				break;
 			case 2: 
 				system("cls");
-				tampil();
+				cout << "\nDaftar FILE :\n";
+				ambilFile();
+				if(lanjut==1){
+					cout << "Nama file yang akan ditampilkan: ";
+					cin >> namafile;
+					ambilData();
+				}
 				cin.ignore();
 				system("cls");
 				break;
 			case 3:
 				system("cls");
 				cout << "SEARCHING\n";
-				searching();
-				cin.ignore();
+				ambilFile();
+				if (lanjut == 1) {
+					cout << "Nama file: ";
+					cin >> namafile;
+					ambilData();
+					searching();
+				}
 				system("cls");
 				break;
 			case 4: 
 				system("cls");
 				cout << "SORTING\n";
-				sorting();
-				cin.ignore();
+				ambilFile();
+				if (lanjut == 1) {
+					cout << "Nama file: ";
+					cin >> namafile;
+					ambilData();
+					sorting();
+				}
+    			cin.ignore();
 				system("cls");
 				break;
-			case 5: 
+			case 5:
 				system("cls");
-				cout << "SORTING\n";
-				operasi();
+				ambilFile();
+				if (lanjut == 1) {
+					operasi();
+				}
 				cin.ignore();
 				system("cls");
 				break;
@@ -673,6 +989,6 @@ int main (){
 				cout << "PILIHAN TIDAK VALID\n";			
 			}
 		
-		} while (pilih !=6);
+		} while (pilih != 6);
 		return 0;
 	}
