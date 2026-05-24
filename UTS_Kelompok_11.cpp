@@ -444,6 +444,48 @@ void sorting(){
 			}	
 		} while (ulang == 'y' || ulang == 'Y');
 	}
+	
+void updateData() {
+    if (jumlah == 0) {
+        cout << "Data masih kosong!\n";
+        return;
+    }
+    long cari;
+    bool ketemu = false;
+    cout << "\nUPDATE DATA\n";
+    cout << "==================================\n";
+    cout << "Masukkan No Pendaftaran yang ingin diubah: ";
+    cin >> cari;
+    cin.ignore();
+
+    for (int i = 0; i < jumlah; i++) {
+        if (dat[i].nopendaftaran == cari) {
+            ketemu = true;
+            cout << "Data ditemukan!\n";
+            cout << "Nama sebelumnya: " << dat[i].nama << "\n";
+            cout << "Masukkan Nama Baru: ";
+            getline(cin, dat[i].nama);
+            cout << "Tanggal sebelumnya: " << dat[i].tanggal << "\n";
+            cout << "Masukkan Tanggal Baru (YYYY-MM-DD): ";
+            getline(cin, dat[i].tanggal);
+            
+            // Update dattemp agar perubahan tidak hilang saat di-sort lalu dikembalikan ke awal
+            for(int j = 0; j < jumlah; j++) {
+                if (dattemp[j].nopendaftaran == cari) {
+                    dattemp[j].nama = dat[i].nama;
+                    dattemp[j].tanggal = dat[i].tanggal;
+                    break;
+                }
+            }
+            
+            cout << "\nData berhasil diupdate!\n";
+            break;
+        }
+    }
+    if (!ketemu) {
+        cout << "Data dengan No Pendaftaran " << cari << " tidak ditemukan!\n";
+    }
+}
 
 int main (){
 	int pilih;
@@ -459,7 +501,8 @@ int main (){
 		cout << "2. TAMPIL DATA\n";
 		cout << "3. SEARCHING\n";
 		cout << "4. SORTING\n";
-		cout << "5. EXIT\n";
+		cout << "5. UPDATE DATA\n";
+		cout << "6. EXIT\n";
 		cout << "=========================\n";
 		cout << "Pilih: ";
 		cin >> pilih;  
@@ -492,13 +535,19 @@ int main (){
 				cin.ignore();
 				system("cls");
 				break;
-			case 5: 
+			case 5:
+				system("cls");
+				updateData();
+				cin.ignore();
+				system("cls");
+				break;
+			case 6: 
 				cout << "Exiting program...\n";
 				break;
 			default:
 				cout << "PILIHAN TIDAK VALID\n";			
 			}
 		
-		} while (pilih !=5);
+		} while (pilih != 6);
 		return 0;
 	}
