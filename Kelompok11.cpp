@@ -176,14 +176,20 @@ void ambilFile(){
 
     FILE *fptr = fopen("folder.txt","rb");
 
+    cout << "\n+---------------------------------+\n";
+    cout << "|           DAFTAR FILE           |\n";
+    cout << "+---------------------------------+\n";
+
     if(fptr == NULL){
-        cout << "Belum ada file yang disimpan\n";
+        cout << "| Belum ada file yang disimpan    |\n";
+        cout << "+---------------------------------+\n";
         lanjut = 0;
     } else {
         while(fread(listfile[t],20,1,fptr)==1){
-            cout << listfile[t] << endl;
+            cout << "| - " << left << setw(29) << listfile[t] << "|\n";
             t++;
         }
+        cout << "+---------------------------------+\n";
         fclose(fptr);
         lanjut = 1;
     }
@@ -977,7 +983,6 @@ int main (){
 				break;
 			case 2: 
 				system("cls");
-				cout << "\nDaftar FILE :\n";
 				ambilFile();
 				if(lanjut==1){
 					cout << "Nama file yang akan ditampilkan: ";
@@ -993,7 +998,6 @@ int main (){
 				break;
 			case 3:
 				system("cls");
-				cout << "SEARCHING\n";
 				ambilFile();
 				if (lanjut == 1) {
 					cout << "Nama file: ";
@@ -1005,7 +1009,6 @@ int main (){
 				break;
 			case 4: 
 				system("cls");
-				cout << "SORTING\n";
 				ambilFile();
 				if (lanjut == 1) {
 					cout << "Nama file: ";
