@@ -968,7 +968,11 @@ int main (){
 					cout << "Nama file yang akan ditampilkan: ";
 					cin >> namafile;
 					ambilData();
+					cin.ignore();
+				} else {
+					cin.ignore();
 				}
+				cout << "\nTekan Enter untuk kembali ke menu...";
 				cin.ignore();
 				system("cls");
 				break;
