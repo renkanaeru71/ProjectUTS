@@ -847,6 +847,7 @@ void mergeurutfile(){
     cout << "Banyaknya file yang akan di merge urut (max 4): ";
     cin >> n;
 
+    // 1. Meminta input nama file sumber
     for(int i=0; i<n; i++){
         cout << "Nama File " << i+1 << " : ";
         cin >> file[i];
@@ -855,26 +856,35 @@ void mergeurutfile(){
     cout << "Di MERGE URUT dan disimpan di file : ";
     cin >> hasil;
 
+    // 2. Loop untuk memuat data dari file sumber ke dalam array
     for(int i=0; i<n; i++){
-        strcpy(namafile, file[i]);
+        strcpy(namafile, file[i]); // Set nama file yang mau dibaca
 
+        // Jika ini bukan file pertama, set statusmergeurut = 1
+        // Ini agar fungsi ambilData() tidak me-reset isi array
+        // melainkan menumpuk (append) data baru di bawah data sebelumnya
         if(i != 0)
-            statusmergeurut = 1;
+            statusmergeurut = 1; 
 
-        ambilData();
+        ambilData(); // Baca isi file dan masukkan ke dalam array memori
     }
 
+    // 3. Set target file output ke 'hasil'
     strcpy(namafile, hasil);
 
+    // 4. Mengurutkan gabungan data yang ada di array memori
     BubbleS();      
-    updatemode = 0; 
+    
+    // 5. Menyimpan hasil array yang sudah diurutkan ke file 'hasil'
+    updatemode = 0; // Mode overwrite (buat file baru)
     simpandata();
 
+    // 6. Reset variabel ke kondisi awal
     statusmergeurut = 0;
     status = 0;
 
     cout << "\nHasil MERGE URUT : \n";
-    ambilData();
+    ambilData(); // Tampilkan isi file hasil merge
 }
 
 void operasi(){
