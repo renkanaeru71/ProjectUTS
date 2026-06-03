@@ -142,15 +142,19 @@ void ambilData() {
     string line;
 
     while(getline(f, line)){
+        if(line.empty() || line.length() < 3) continue;
+
         int p1 = line.find('|');
         int p2 = line.find('|', p1+1);
 
-        dat[jumlah].nopendaftaran = stol(line.substr(0,p1));
-        dat[jumlah].nama = line.substr(p1+1, p2-p1-1);
-        dat[jumlah].tanggal = line.substr(p2+1);
+        if(p1 != string::npos && p2 != string::npos){
+            dat[jumlah].nopendaftaran = stol(line.substr(0,p1));
+            dat[jumlah].nama = line.substr(p1+1, p2-p1-1);
+            dat[jumlah].tanggal = line.substr(p2+1);
 
-        dattemp[jumlah] = dat[jumlah];
-        jumlah++;
+            dattemp[jumlah] = dat[jumlah];
+            jumlah++;
+        }
     }
 
     f.close();
@@ -697,12 +701,29 @@ void mergesambungfile(){
         string baris;
 
         while(getline(in, baris)){
-            out << baris << endl;
+            if(!baris.empty()){
+                out << baris << endl;
+            }
         }
         in.close();
     }
 
     out.close();
+
+    // Mendaftarkan file hasil merge ke folder.txt jika belum ada
+    strcpy(namafile, hasil);
+    bool found = false;
+    FILE *idx = fopen("folder.txt", "rb");
+    t = 0;
+    if(idx){
+        while(fread(listfile[t],20,1,idx)==1){
+            if(strcmp(listfile[t], namafile)==0)
+                found = true;
+            t++;
+        }
+        fclose(idx);
+    }
+    if(!found) simpanFile();
 
     cout << "Merge selesai ke file " << hasil << endl;
 }
