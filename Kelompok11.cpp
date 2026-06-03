@@ -87,8 +87,9 @@ void cekfile(){
 
 void input(){
 	int n;
-	cout << "\nINPUT DATA\n";
-	cout << "==================================\n";
+	cout << "\n+---------------------------------+\n";
+	cout << "|            INPUT DATA           |\n";
+	cout << "+---------------------------------+\n";
 	cout << "Jumlah data (max 10): ";
     cin >> n;
 	
@@ -154,20 +155,20 @@ void ambilData() {
 
     f.close();
 
-    cout << "\n====================================================\n";
+    cout << "\n=======================================================\n";
     cout << left
-         << setw(20) << "NO PENDAFTARAN"
-         << setw(20) << "NAMA"
-         << setw(15) << "TANGGAL"
-         << endl;
-    cout << "====================================================\n";
+         << "| " << setw(18) << "NO PENDAFTARAN"
+         << "| " << setw(20) << "NAMA"
+         << "| " << setw(12) << "TANGGAL" << "|\n";
+    cout << "=======================================================\n";
 
     for(int i=0;i<jumlah;i++){
-        cout << setw(20) << dat[i].nopendaftaran
-             << setw(20) << dat[i].nama
-             << setw(15) << dat[i].tanggal
-             << endl;
+        cout << left
+             << "| " << setw(18) << dat[i].nopendaftaran
+             << "| " << setw(20) << dat[i].nama
+             << "| " << setw(12) << dat[i].tanggal << "|\n";
     }
+    cout << "=======================================================\n";
 }
 
 void ambilFile(){
@@ -246,8 +247,9 @@ void seqsearching(){
 	int x =0;
 	bool ketemu = false;
 	
-	cout << "\nSEQUENTIAL SEARCH\n";
-	cout << "==================\n";
+	cout << "\n+---------------------------------+\n";
+	cout << "|        SEQUENTIAL SEARCH        |\n";
+	cout << "+---------------------------------+\n";
 	
 	cout << "\n No Pendaftaran yang dicari: ";
 	cin >> cari;
@@ -383,8 +385,9 @@ void binary(){
 	int cari;
 	int kiri, tengah, kanan;
 	bool ketemu = false;
-	cout << "BINARY SEARCH\n";
-	cout << "==================\n";
+	cout << "\n+---------------------------------+\n";
+	cout << "|          BINARY SEARCH          |\n";
+	cout << "+---------------------------------+\n";
 
     cout << "\nNo Pendaftaraan yang dicari = ";
     cin >> cari;
@@ -430,12 +433,13 @@ void searching (){
 	int pilih;
 	do{
 		system("cls");
-		cout << "MENU SEARCHING\n";
-		cout << "=========================\n";
-		cout << "1. Sequential\n";
-		cout << "2. Binary\n";
-		cout << "3. EXIT\n";
-		cout << "=========================\n";
+		cout << "+---------------------------------+\n";
+		cout << "|         MENU SEARCHING          |\n";
+		cout << "+---------------------------------+\n";
+		cout << "| 1. Sequential Search            |\n";
+		cout << "| 2. Binary Search                |\n";
+		cout << "| 3. Kembali                      |\n";
+		cout << "+---------------------------------+\n";
 		cout << "Pilih: ";
 		cin >> pilih;  
 		cout << endl;
@@ -469,22 +473,21 @@ void tampil(){
 		cin.ignore();
 		return;
 		}
-           cout << "\n====================================================\n";
-           
-			cout << left
-				 << setw(20) << "NO PENDAFTARAN"
-				 << setw(20) << "NAMA"
-				 << setw(15) << "TANGGAL"
-				 << endl;
-           cout << "====================================================\n";
+        cout << "\n=======================================================\n";
+        cout << left
+             << "| " << setw(18) << "NO PENDAFTARAN"
+             << "| " << setw(20) << "NAMA"
+             << "| " << setw(12) << "TANGGAL" << "|\n";
+        cout << "=======================================================\n";
 		for (int x = 0; x < jumlah; x++){
 		
         cout << left
-			 << setw(20)  << dat[x].nopendaftaran
-             << setw(20)  << dat[x].nama
-             << setw(15) << dat[x].tanggal        
-             << endl;
+			 << "| " << setw(18) << dat[x].nopendaftaran
+             << "| " << setw(20) << dat[x].nama
+             << "| " << setw(12) << dat[x].tanggal        
+             << "|\n";
     }
+    cout << "=======================================================\n";
 	cin.ignore();
 }
 
@@ -518,16 +521,17 @@ void sorting(){
 	
 	do {
 		system("cls");
-        cout << "MENU SORTING :\n";
-        cout << "=========================\n";
-        cout << "1. BUBBLE SORT\n";
-        cout << "2. SELECTION SORT\n";
-        cout << "3. INSERTION SORT\n";
-        cout << "4. SHELL SORT\n";
-        cout << "5. QUICK SORT\n";
-        cout << "6. MERGE SORT\n";
-        cout << "7. Kembali ke MENU UTAMA\n";
-        cout << "=========================\n";
+        cout << "+---------------------------------+\n";
+        cout << "|           MENU SORTING          |\n";
+        cout << "+---------------------------------+\n";
+        cout << "| 1. Bubble Sort                  |\n";
+        cout << "| 2. Selection Sort               |\n";
+        cout << "| 3. Insertion Sort               |\n";
+        cout << "| 4. Shell Sort                   |\n";
+        cout << "| 5. Quick Sort                   |\n";
+        cout << "| 6. Merge Sort                   |\n";
+        cout << "| 7. Kembali ke Menu Utama        |\n";
+        cout << "+---------------------------------+\n";
         cout << "Pilih : ";
         cin >> pilih;
         cout << endl;
@@ -893,15 +897,16 @@ void operasi(){
 
     do{
         system("cls");
-        cout << "MENU OPERASI FILE\n";
-        cout << "=====================\n";
-        cout << "1. MERGING SAMBUNG\n";
-        cout << "2. MERGING URUT\n";
-        cout << "3. SPLITTING\n";
-        cout << "4. UPDATING DATA\n";
-        cout << "5. HAPUS DATA\n";
-        cout << "6. Kembali\n";
-        cout << "=====================\n";
+        cout << "+---------------------------------+\n";
+        cout << "|       MENU OPERASI FILE         |\n";
+        cout << "+---------------------------------+\n";
+        cout << "| 1. Merging Sambung              |\n";
+        cout << "| 2. Merging Urut                 |\n";
+        cout << "| 3. Splitting                    |\n";
+        cout << "| 4. Updating Data                |\n";
+        cout << "| 5. Hapus Data                   |\n";
+        cout << "| 6. Kembali ke Menu Utama        |\n";
+        cout << "+---------------------------------+\n";
         cout << "Pilih: ";
         cin >> pilih;
 
@@ -949,16 +954,16 @@ int main (){
 	
 	do{
 		system("cls");
-		cout << "MENU\n";
-		cout << "PROGRAM TUGAS\n";
-		cout << "=========================\n";
-		cout << "1. INPUT DATA\n";
-		cout << "2. TAMPIL DATA\n";
-		cout << "3. SEARCHING\n";
-		cout << "4. SORTING\n";
-		cout << "5. OPERASI\n";
-		cout << "6. EXIT\n";
-		cout << "=========================\n";
+		cout << "+---------------------------------+\n";
+		cout << "|      PROGRAM TUGAS STRUKDAT     |\n";
+		cout << "+---------------------------------+\n";
+		cout << "| 1. Input Data                   |\n";
+		cout << "| 2. Tampil Data                  |\n";
+		cout << "| 3. Searching                    |\n";
+		cout << "| 4. Sorting                      |\n";
+		cout << "| 5. Operasi File                 |\n";
+		cout << "| 6. Keluar Program               |\n";
+		cout << "+---------------------------------+\n";
 		cout << "Pilih: ";
 		cin >> pilih;  
 		
